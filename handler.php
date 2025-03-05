@@ -2,14 +2,26 @@
 session_start();
 
 function logOutBtn(){
-    echo '<form action="index.php" method="POST">
-    <button class="btn btn-danger" onclick="destroySession()">Kijelentkezés</button>
-    </form>';
+    echo '<form action="logout.php" method="POST" class="d-inline">';
+    echo '<button type="submit" class="btn btn-danger">Kijelentkezés</button>';
+    echo '</form>';
 }
 
 function destroySession(){
-    session_unset();
-    toHomePage();
+    // Töröljük a session összes változóját
+    $_SESSION = array();
+
+    // Töröljük a session cookie-t
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    // Végül megsemmisítjük a sessiont
+    session_destroy();
 }
 
 function isLoggedIn(){
