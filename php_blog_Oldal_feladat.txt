@@ -1,0 +1,105 @@
+Blogoldal Készítése
+===================
+Blogoldal készítése PHP, MySQL, HTML használatával. 
+A felhasználóknak lehetősége lesz cikkek olvasására és kommentálására, az adminisztrátoroknak pedig új cikkek hozzáadására és szerkesztésére. Az alkalmazásnak tartalmaznia kell felhasználói regisztrációt, bejelentkezést, valamint alapvető biztonsági intézkedéseket.
+
+A neved szerepeljen a HTML head részben.
+Beadási határidő 2025.03.05. 19:00
+
+
+1. Alap Adatbázis Struktúra 
+------------------------------------------------------
+Készíts el egy MySQL adatbázist, és az alábbi táblákat:
+
+users: Felhasználók adatai (id, név, email, jelszó).
+posts: Cikkek adatai (id, cím, tartalom, dátum, szerző_id).
+comments: Kommentek adatai (id, post_id, user_id, hozzászólás szövege, dátum).
+
+
+2. Felhasználói Regisztráció és Bejelentkezés 
+------------------------------------------------------
+A felhasználók képesek regisztrálni és bejelentkezni a rendszerbe.
+
+Regisztráció: A felhasználónak meg kell adnia a nevét, email címét, és jelszavát.
+A jelszavakat titkosítani kell.
+Ellenőrizni kell, hogy az email cím egyedi legyen.
+Bejelentkezés: A felhasználó bejelentkezhet az email címével és a jelszavával.
+A bejelentkezést követően egy session változó jelezze, hogy a felhasználó be van jelentkezve.
+
+Feladatok:
+---------------------------
+Készítsd el a regisztrációs oldalt (register.php), ahol az új felhasználók regisztrálhatnak.
+Készítsd el a bejelentkezési oldalt (login.php), ahol a felhasználók beléphetnek.
+Készítsd el a kilépési funkciót (logout.php), hogy a felhasználó kijelentkezzen.
+
+
+3. Cikkek Lista és Megjelenítés 
+------------------------------------------------------
+A főoldalon listázni kell a cikkeket.
+
+Minden cikk megjelenítése: cím, rövid részlet (első 100 karakter) és dátum.
+Minden cikkhez tartozzon egy link, amely a cikk teljes tartalmát mutatja.
+
+Feladatok:
+---------------------------
+Készítsd el a főoldalt (index.php), ahol a cikkek listázása történik.
+Készítsd el a cikkek részletes megjelenítését (post.php), ahol az egyes cikkek teljes tartalmát olvashatják a felhasználók.
+
+
+4. Új Cikkek Hozzáadása 
+------------------------------------------------------
+Csak a bejelentkezett adminisztrátorok képesek új cikket hozzáadni.
+
+Készíts egy adminisztrátori felületet, ahol a felhasználó be tudja adni az új cikkeket.
+A cikkekhez cím és tartalom szükséges.
+
+Feladatok:
+---------------------------
+Készítsd el az admin felületet (admin.php), ahol az adminisztrátorok új cikkeket hozhatnak létre.
+Készítsd el az új cikkek hozzáadására szolgáló PHP kódot (add_post.php).
+
+
+5. Kommentek Hozzáadása 
+------------------------------------------------------
+A felhasználók képesek kommentelni a cikkeket, és az adminisztrátorok moderálhatják a kommenteket.
+
+Készítsd el a lehetőséget, hogy a bejelentkezett felhasználók kommentelhetik a cikkeket.
+A kommentekhez tartozzon a kommentelő neve és a dátum.
+
+Feladatok:
+---------------------------
+Készítsd el a kommentek hozzáadására szolgáló PHP kódot (comment.php).
+Készítsd el a kommentek megjelenítését a cikkek alatt.
+
+
+6. Adminisztrációs Felület és Cikkek Szerkesztése 
+------------------------------------------------------
+A bejelentkezett adminisztrátorok képesek lesznek a cikkeket szerkeszteni.
+
+Készíts egy admin felületet, ahol a cikkek listázásra kerülnek, és a cikkek szerkeszthetők.
+
+Feladatok:
+---------------------------
+Készítsd el az adminisztrátori felületet (admin_dashboard.php), ahol a cikkek listázhatók és szerkeszthetők.
+Készítsd el a cikkek szerkesztésére szolgáló PHP kódot (edit_post.php).
+
+
+7. Biztonság és Validáció 
+------------------------------------------------------
+A feladat során ügyelj arra, hogy minden felhasználói adat és interakció megfelelően validált legyen.
+
+Használj SQL injection elleni védelmet.
+Gondoskodj arról, hogy a felhasználói inputok (például jelszavak, kommentek) ne okozhassanak biztonsági problémákat.
+
+Feladatok:
+---------------------------
+Alkalmazz megfelelő biztonsági intézkedéseket a regisztrációs, bejelentkezési és adminisztrátori oldalon.
+Ellenőrizd az űrlapokon megadott adatokat (pl. email formátum, jelszó erősség).
+
+
+
+Extra Feladat (opcionális, ha időd engedi):
+------------------------------------------------------
+Felhasználói Profil Oldal: A bejelentkezett felhasználók nézhetik és szerkeszthetik saját profiljukat (pl. név, email cím).
+Keresési Funkció: A cikkek között keresési lehetőség beépítése.
+
