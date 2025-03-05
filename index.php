@@ -8,7 +8,7 @@ include "handler.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Blogoldal - Dani</title>
+    <title>Blogoldal - M. Dani</title>
 </head>
 <body>
     <?php renderNavbar(); ?>
@@ -16,7 +16,7 @@ include "handler.php";
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Üdvözöl a Blogoldal</h1>
+                <h1>Üdvözöl a Blogoldalam!</h1>
                 <?php
                 if(!isLoggedIn()){
                     echo '<p>A bejegyzések megtekintéséhez jelentkezz be!</p>';
