@@ -11,25 +11,10 @@ include "handler.php";
     <title>Blogoldal - Dani</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Blogoldal</a>
-                <div class="navbar-nav">
-                    <?php
-                    if(isLoggedIn()){
-                        echo '<a class="nav-link" href="posts.php">Bejegyzések</a>';
-                        logOutBtn();
-                    } else {
-                        echo '<a class="nav-link" href="register.php">Regisztráció</a>';
-                        echo '<a class="nav-link" href="login.php">Bejelentkezés</a>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </nav>
-
-        <div class="row mt-4">
+    <?php renderNavbar(); ?>
+    
+    <div class="container">
+        <div class="row">
             <div class="col">
                 <h1>Üdvözöl a Blogoldal</h1>
                 <?php
@@ -40,6 +25,7 @@ include "handler.php";
             </div>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

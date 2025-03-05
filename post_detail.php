@@ -59,7 +59,9 @@ $conn->close();
     <title>Blogoldal - <?php echo htmlspecialchars($post['title']); ?></title>
 </head>
 <body>
-    <div class="container mt-5">
+    <?php renderNavbar(); ?>
+    
+    <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h1><?php echo htmlspecialchars($post['title']); ?></h1>
@@ -98,6 +100,7 @@ $conn->close();
             </div>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

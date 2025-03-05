@@ -36,7 +36,9 @@ $conn->close();
     <title>Blogoldal - Új bejegyzés</title>
 </head>
 <body>
-    <div class="container mt-5">
+    <?php renderNavbar(); ?>
+    
+    <div class="container">
         <h1>Új bejegyzés</h1>
         <form method="POST">
             <div class="mb-3">
@@ -50,6 +52,7 @@ $conn->close();
             <button type="submit" class="btn btn-primary">Mentés</button>
         </form>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

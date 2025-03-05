@@ -2,7 +2,7 @@
 include 'connection.php';
 
 if(!isLoggedIn()){
-    toHomePage();   
+    toHomePage();
 }
 
 $conn = new DBConnection();
@@ -23,7 +23,9 @@ $conn->close();
     <title>Blogoldal - Bejegyzések</title>
 </head>
 <body>
-    <div class="container mt-5">
+    <?php renderNavbar(); ?>
+    
+    <div class="container">
         <h1>Bejegyzések</h1>
         <div class="row">
             <?php
@@ -43,8 +45,8 @@ $conn->close();
             }
             ?>
         </div>
-        <a href="add_post.php" class="btn btn-success mt-3">Új bejegyzés</a>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
