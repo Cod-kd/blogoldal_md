@@ -85,5 +85,28 @@ class DBConnection{
     function close(){
         $this->mysqli->close();
     }
+
+    function isAdmin($email = null) {
+        // Ha nem adunk meg email-t, az aktuális sessionben lévő emailt használjuk
+        if ($email === null && isset($_SESSION['user_email'])) {
+            $email = $_SESSION['user_email'];
+        }
+    
+        // Ha nincs email, akkor biztosan nem admin
+        if ($email === null) {
+            return false;
+        }
+    
+        $stmt = $this->mysqli->prepare("SELECT is_admin FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($row = $result->fetch_assoc()) {
+            return $row['is_admin'] == 1;
+        }
+        
+        return false;
+    }
 }
 ?>
