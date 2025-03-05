@@ -1,7 +1,11 @@
-**Project for school**
+#Blogoldal
 
-How to run:
+## **Project for school only!**
+
+### How to run:
 - start a mysql server
 - import database
 - define host parameters in connection.php
 - serve php project
+
+## Ovner: Dániel Murányi
