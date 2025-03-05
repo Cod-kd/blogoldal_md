@@ -8,4 +8,4 @@
 - define host parameters in connection.php
 - serve php project
 
-## Ovner: Dániel Murányi
+## Owner: Dániel Murányi
