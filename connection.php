@@ -6,7 +6,7 @@ class DBConnection{
     private $password = "root";
     private $database = "blogoldal";
 
-    protected $mysqli;
+    public $mysqli;
 
     function __construct()
     {
