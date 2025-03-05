@@ -6,7 +6,13 @@ if(!isLoggedIn()){
 }
 
 $conn = new DBConnection();
-$query = "SELECT p.id, p.title, p.description, p.date, u.name as author 
+$user_email = $_SESSION['user_email'];
+$user_query = "SELECT id FROM users WHERE email = '$user_email'";
+$user_result = $conn->mysqli->query($user_query);
+$user = $user_result->fetch_assoc();
+$is_admin = $conn->isAdmin();
+
+$query = "SELECT p.id, p.title, p.description, p.date, p.author_id, u.name as author 
           FROM posts p 
           JOIN users u ON p.author_id = u.id 
           ORDER BY p.date DESC";
@@ -37,7 +43,15 @@ $conn->close();
                     echo '<h5 class="card-title">' . htmlspecialchars($row['title']) . '</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">' . htmlspecialchars($row['author']) . ' - ' . $row['date'] . '</h6>';
                     echo '<p class="card-text">' . substr(htmlspecialchars($row['description']), 0, 100) . '...</p>';
+                    echo '<div class="d-flex justify-content-between">';
                     echo '<a href="post_detail.php?id=' . $row['id'] . '" class="btn btn-primary">Tovább olvasom</a>';
+                    
+                    // Szerkesztés link csak adminnak vagy a saját bejegyzésnél
+                    if ($is_admin || $row['author_id'] == $user['id']) {
+                        echo '<a href="edit_post.php?id=' . $row['id'] . '" class="btn btn-secondary">Szerkesztés</a>';
+                    }
+                    
+                    echo '</div>';
                     echo '</div></div></div>';
                 }
             } else {
