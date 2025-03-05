@@ -7,12 +7,6 @@ if(isLoggedIn()){
 
 $errors = [];
 
-// Ellenőrizzük, van-e korábbi regisztrációs hiba
-if (isset($_SESSION['registration_error'])) {
-    $errors[] = $_SESSION['registration_error'];
-    unset($_SESSION['registration_error']);
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Névhez tartozó validáció
     $name = trim($_POST['name']);
@@ -42,8 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ha nincs hiba, regisztráció
     if (empty($errors)) {
         $conn = new DBConnection();
-        $conn->registration($name, $email, $password);
+        $result = $conn->registration($name, $email, $password);
         $conn->close();
+
+        if ($result['success']) {
+            // Ha sikeres a regisztráció, átirányítás
+            header('Location: login.php');
+            exit();
+        } else {
+            $errors[] = $result['message'];
+        }
     }
 }
 ?>

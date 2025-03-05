@@ -19,8 +19,6 @@ class DBConnection{
     }
     
     function registration($name, $email, $password){
-        ob_clean(); // Kiürítjük a kimeneti puffert
-
         // Ellenőrizzük, hogy az email már létezik-e
         $check_email = $this->mysqli->prepare("SELECT id FROM users WHERE email = ?");
         $check_email->bind_param("s", $email);
@@ -28,8 +26,10 @@ class DBConnection{
         $check_email->store_result();
         
         if ($check_email->num_rows > 0) {
-            $_SESSION['registration_error'] = "Ez az email cím már regisztrálva van!";
-            return false;
+            return [
+                'success' => false,
+                'message' => "Ez az email cím már regisztrálva van!"
+            ];
         }
         
         $stmt = $this->mysqli->prepare("CALL registration(?, ?, ?)");
@@ -37,40 +37,48 @@ class DBConnection{
         $stmt->bind_param("sss", $name, $email, $hashed_password);
 
         if ($stmt->execute()) {
-            // Átirányítás a login oldalra
-            header('Location: login.php');
-            exit();
+            return [
+                'success' => true,
+                'message' => "Sikeres regisztráció!"
+            ];
         } else {
-            $_SESSION['registration_error'] = "Hiba a regisztráció során: " . $this->mysqli->error;
-            return false;
+            return [
+                'success' => false,
+                'message' => "Hiba a regisztráció során: " . $this->mysqli->error
+            ];
         }
         $stmt->close();
     }
 
     function login($email, $password){
-        ob_clean(); // Kiürítjük a kimeneti puffert
-
         $stmt = $this->mysqli->prepare("SELECT getHashedPassword(?) AS hashed_password");
         $stmt->bind_param("s", $email);
         if (!$stmt->execute()) {
-            $_SESSION['login_error'] = "Hiba a bejelentkezés során: " . $this->mysqli->error;
-            return false;
+            return [
+                'success' => false,
+                'message' => "Hiba a bejelentkezés során: " . $this->mysqli->error
+            ];
         }
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         
         if (!$row) {
-            $_SESSION['login_error'] = "Hibás email vagy jelszó!";
-            return false;
+            return [
+                'success' => false,
+                'message' => "Hibás email vagy jelszó!"
+            ];
         }
         
         if (hash('sha256', $password) == $row["hashed_password"]) {
-            sessionLog($email);
-            header('Location: index.php');
-            exit();
+            return [
+                'success' => true,
+                'message' => "Sikeres belépés!"
+            ];
         } else {
-            $_SESSION['login_error'] = "Hibás email vagy jelszó!";
-            return false;
+            return [
+                'success' => false,
+                'message' => "Hibás email vagy jelszó!"
+            ];
         }
     }
 

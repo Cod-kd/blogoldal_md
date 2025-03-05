@@ -25,8 +25,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ha nincs hiba, bejelentkezés
     if (empty($errors)) {
         $conn = new DBConnection();
-        $login_result = $conn->login($email, $password);
+        $result = $conn->login($email, $password);
         $conn->close();
+
+        if ($result['success']) {
+            // Ha sikeres a bejelentkezés, sessionLog és átirányítás
+            sessionLog($email);
+            header('Location: index.php');
+            exit();
+        } else {
+            $errors[] = $result['message'];
+        }
     }
 }
 ?>
