@@ -5,16 +5,13 @@ if(!isLoggedIn()){
     toHomePage();
 }
 
-// Csak admin jogosultsággal rendelkező felhasználók férhetnek hozzá
-// Ezt egy külön admin mező hozzáadásával lehet megvalósítani a users táblában
-
 $conn = new DBConnection();
 $user_email = $_SESSION['user_email'];
 
-// Felhasználói szerepkör ellenőrzése
-$query = "SELECT id, name FROM users WHERE email = '$user_email'";
-$result = $conn->mysqli->query($query);
-$user = $result->fetch_assoc();
+// Csak admin jogosultsággal rendelkező felhasználók férhetnek hozzá
+if (!$conn->isAdmin()) {
+    toHomePage();
+}
 
 $posts_query = "SELECT p.id, p.title, p.description, p.date, u.name as author 
                 FROM posts p 

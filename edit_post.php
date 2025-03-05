@@ -7,6 +7,12 @@ if(!isLoggedIn()){
 
 $conn = new DBConnection();
 $post_id = $_GET['id'];
+$user_email = $_SESSION['user_email'];
+
+// Felhasználó és bejegyzés jogosultságának ellenőrzése
+$user_query = "SELECT id FROM users WHERE email = '$user_email'";
+$user_result = $conn->mysqli->query($user_query);
+$user = $user_result->fetch_assoc();
 
 // Bejegyzés lekérdezése
 $query = "SELECT * FROM posts WHERE id = ?";
@@ -15,6 +21,16 @@ $stmt->bind_param("i", $post_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $post = $result->fetch_assoc();
+
+// Jogosultság ellenőrzése: admin vagy a saját bejegyzés
+$is_admin = $conn->isAdmin();
+$is_own_post = ($post['author_id'] == $user['id']);
+
+if (!$is_admin && !$is_own_post) {
+    // Ha nem admin és nem a saját bejegyzése, átirányítás
+    header('Location: posts.php');
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
@@ -26,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     $conn->close();
-    header('Location: admin_dashboard.php');
+    header('Location: posts.php');
     exit();
 }
 ?>
@@ -54,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea class="form-control" id="description" name="description" rows="5" required><?php echo htmlspecialchars($post['description']); ?></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Mentés</button>
-            <a href="admin_dashboard.php" class="btn btn-secondary">Vissza</a>
+            <a href="posts.php" class="btn btn-secondary">Vissza</a>
         </form>
     </div>
     
